@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 //Redux
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+//Utils
+import { smallImage } from '../util';
 
-const GamesDetail = () => {
+const GamesDetail = ({pathId}) => {
     const history = useHistory();
 
     //Exist Detail handler
@@ -24,10 +26,10 @@ const GamesDetail = () => {
       <>
       {!isLoading && (
       <CardShadow className="shadow" onClick={exitDetailHandler}>
-          <Detail>
+          <Detail layoutId={pathId}>
               <Stats>
                   <div className="rating">
-                      <h3>{game.name}</h3>
+                      <motion.h3 layoutId={`title ${pathId}`}>{game.name}</motion.h3>
                       <p>Rating: {game.rating}</p>
                   </div>
                   <Info>
@@ -40,14 +42,14 @@ const GamesDetail = () => {
                   </Info>
               </Stats>
               <Media>
-                  <img src={game.background_image} alt={game.name}/>
+                  <motion.img layoutId={`image ${pathId}`} src={smallImage(game.background_image,1280)} alt={game.name}/>
               </Media>
               <Description>
                   <p>{game.description_raw}</p>
               </Description>
               <div className="gallery">
                   {screenshot.results.map(screenshot => (
-                      <img key={screenshot.id} src={screenshot.image} alt='screenshot'/>
+                      <img key={screenshot.id} src={smallImage(screenshot.image,1280)} alt='screenshot'/>
                   ))}
               </div>
           </Detail>
