@@ -13,9 +13,14 @@ import xbox from '../img/xbox.svg';
 import nintendo from '../img/nintendo.svg';
 import apple from '../img/apple.svg';
 import gamepad from '../img/gamepad.svg';
+import starEmpty from '../img/star-empty.png';
+import starFull from '../img/star-full.png';
 
 const GamesDetail = ({pathId}) => {
     const history = useHistory();
+
+    //Extract data
+  const {game, screenshot, isLoading} = useSelector((state) => state.detail);
 
     //Exist Detail handler
     const exitDetailHandler = (e) => {
@@ -48,9 +53,22 @@ const GamesDetail = ({pathId}) => {
                 return gamepad;
         }
     };
+
+    //Render rating stars
+    const getStars = () => {
+        const stars = [];
+        const rating = Math.floor(game.rating);
+        for (let i = 1; i <= 5; i++) {
+            if(i <= rating){
+                stars.push(<img alt="star" key={i} src={starFull}></img>);
+            }else{
+                stars.push(<img alt="star" key={i} src={starEmpty}></img>);
+            }
+        }
+        return stars;
+    }
     
-  //Extract data
-  const {game, screenshot, isLoading} = useSelector((state) => state.detail);
+  
 
   return(
       <>
@@ -61,6 +79,7 @@ const GamesDetail = ({pathId}) => {
                   <div className="rating">
                       <motion.h3 layoutId={`title ${pathId}`}>{game.name}</motion.h3>
                       <p>Rating: {game.rating}</p>
+                      {getStars()}
                   </div>
                   <Info>
                       <h3>Platforms</h3>
@@ -127,6 +146,11 @@ const Stats = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    img{
+        width: 2rem;
+        height: 2rem;
+        display: inline;
+    }
 `;
 
 const Info = styled(motion.div)`
