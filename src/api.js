@@ -41,3 +41,7 @@ export const newGamesURL = () => `${BASE_URL}${new_games}`;
 //Specific game details
 export const gameDetailsURL = (game_id) => `${BASE_URL}games/${game_id}`;
 export const gameScreenshotURL = (game_id) => `${BASE_URL}games/${game_id}/screenshots`;
+
+
+//Searched function
+export const searchGameURL = (game_name) => `${BASE_URL}games?search=${game_name}&page_size=9`;
